@@ -51,6 +51,7 @@ public class OptimizerPlanEnvironment extends ExecutionEnvironment {
 		this.optimizerPlan = compiler.compile(plan);
 
 		// do not go on with anything now!
+		// [mcgg] here is how main() method in job is aborted
 		throw new ProgramAbortException();
 	}
 
@@ -80,6 +81,7 @@ public class OptimizerPlanEnvironment extends ExecutionEnvironment {
 
 		setAsContext();
 		try {
+			// [mcgg] actually invokes main method in job's program, and will catch an ProgramAbortException, see line 55
 			prog.invokeInteractiveModeForExecution();
 		}
 		catch (ProgramInvocationException e) {

@@ -338,6 +338,8 @@ public class CliFrontend {
 			LOG.info("Creating program plan dump");
 
 			Optimizer compiler = new Optimizer(new DataStatistics(), new DefaultCostEstimator(), configuration);
+
+			// [mcgg] entrypoint of getting Optimized Plan
 			FlinkPlan flinkPlan = ClusterClient.getOptimizedPlan(compiler, program, parallelism);
 
 			String jsonPlan = null;

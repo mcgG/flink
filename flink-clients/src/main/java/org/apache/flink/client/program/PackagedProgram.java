@@ -573,6 +573,7 @@ public class PackagedProgram {
 		}
 
 		try {
+			// [mcgg] because this main method is runnin in the OptimizerPlanEnvironment, so the execute() method will throw a ProgramAbortException instead of actually submit the operators to flink
 			mainMethod.invoke(null, (Object) args);
 		}
 		catch (IllegalArgumentException e) {
