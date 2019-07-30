@@ -211,11 +211,14 @@ public abstract class ClusterClient<T> {
 				return getOptimizedPlan(compiler, prog.getPlanWithJars(), parallelism);
 			} else if (prog.isUsingInteractiveMode()) {
 				// temporary hack to support the optimizer plan preview
+
+				// [mcgg] Here using OptimizerPlanEnvironment, it has execute() method, which does not actually run the job, it returns an ProgramAbortException instead
 				OptimizerPlanEnvironment env = new OptimizerPlanEnvironment(compiler);
 				if (parallelism > 0) {
 					env.setParallelism(parallelism);
 				}
 
+				// [mcgg] go deeper
 				return env.getOptimizedPlan(prog);
 			} else {
 				throw new RuntimeException("Couldn't determine program mode.");
