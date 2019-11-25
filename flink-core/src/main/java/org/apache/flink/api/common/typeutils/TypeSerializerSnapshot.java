@@ -148,8 +148,13 @@ public interface TypeSerializerSnapshot<T> {
 	 * <p>The snapshot written with this method can be read via {@link #readVersionedSnapshot(DataInputView, ClassLoader)}.
 	 */
 	static void writeVersionedSnapshot(DataOutputView out, TypeSerializerSnapshot<?> snapshot) throws IOException {
-		out.writeUTF(snapshot.getClass().getName());
-		out.writeInt(snapshot.getCurrentVersion());
+		String className = snapshot.getClass().getName();
+		int version = snapshot.getCurrentVersion();
+//		if (!className.equals("org.apache.flink.api.java.typeutils.runtime.TupleSerializerSnapshot")) {
+//			return;
+//		}
+		out.writeUTF(className);
+		out.writeInt(version);
 		snapshot.writeSnapshot(out);
 	}
 
