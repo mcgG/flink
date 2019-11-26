@@ -157,7 +157,8 @@ public class TupleSerializer<T extends Tuple> extends TupleSerializerBase<T> imp
 
 	@Override
 	public TypeSerializerSnapshot<T> snapshotConfiguration() {
-		return new TupleSerializerSnapshot<>(this);
+//		return new TupleSerializerSnapshot<>(this);
+		return new TupleSerializerConfigSnapshot<>(tupleClass, fieldSerializers);
 	}
 
 	private T instantiateRaw() {
@@ -171,15 +172,16 @@ public class TupleSerializer<T extends Tuple> extends TupleSerializerBase<T> imp
 
 	@Override
 	public TypeSerializerSchemaCompatibility<T> resolveSchemaCompatibilityViaRedirectingToNewSnapshotClass(TypeSerializerConfigSnapshot<T> deprecatedConfigSnapshot) {
-		checkArgument(deprecatedConfigSnapshot instanceof TupleSerializerConfigSnapshot);
-
-		final TupleSerializerConfigSnapshot<T> configSnapshot = (TupleSerializerConfigSnapshot<T>) deprecatedConfigSnapshot;
-		TypeSerializerSnapshot[] nestedSnapshots = configSnapshot.getNestedSerializersAndConfigs()
-			.stream()
-			.map(t -> t.f1)
-			.toArray(TypeSerializerSnapshot[]::new);
-
-		TupleSerializerSnapshot<T> newCompositeSnapshot = new TupleSerializerSnapshot<>(configSnapshot.getTupleClass());
-		return delegateCompatibilityCheckToNewSnapshot(this, newCompositeSnapshot, nestedSnapshots);
+//		checkArgument(deprecatedConfigSnapshot instanceof TupleSerializerConfigSnapshot);
+//
+//		final TupleSerializerConfigSnapshot<T> configSnapshot = (TupleSerializerConfigSnapshot<T>) deprecatedConfigSnapshot;
+//		TypeSerializerSnapshot[] nestedSnapshots = configSnapshot.getNestedSerializersAndConfigs()
+//			.stream()
+//			.map(t -> t.f1)
+//			.toArray(TypeSerializerSnapshot[]::new);
+//
+//		TupleSerializerSnapshot<T> newCompositeSnapshot = new TupleSerializerSnapshot<>(configSnapshot.getTupleClass());
+//		return delegateCompatibilityCheckToNewSnapshot(this, newCompositeSnapshot, nestedSnapshots);
+		return TypeSerializerSchemaCompatibility.compatibleAsIs();
 	}
 }

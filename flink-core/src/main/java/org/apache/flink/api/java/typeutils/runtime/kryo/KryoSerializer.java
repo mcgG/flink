@@ -483,12 +483,13 @@ public class KryoSerializer<T> extends TypeSerializer<T> {
 	// --------------------------------------------------------------------------------------------
 
 	@Override
-	public TypeSerializerSnapshot<T> snapshotConfiguration() {
-		return new KryoSerializerSnapshot<>(
-			type,
-			defaultSerializers,
-			defaultSerializerClasses,
-			kryoRegistrations);
+	public KryoSerializerConfigSnapshot<T> snapshotConfiguration() {
+//		return new KryoSerializerSnapshot<>(
+//			type,
+//			defaultSerializers,
+//			defaultSerializerClasses,
+//			kryoRegistrations);
+		return new KryoSerializerConfigSnapshot<>(type, kryoRegistrations);
 	}
 
 	@Deprecated
@@ -513,15 +514,15 @@ public class KryoSerializer<T> extends TypeSerializer<T> {
 
 		@Override
 		public TypeSerializerSchemaCompatibility<T> resolveSchemaCompatibility(TypeSerializer<T> newSerializer) {
-			KryoSerializer<T> javaSerializedKryoSerializer = (KryoSerializer<T>) super.restoreSerializer();
-
-			KryoSerializerSnapshot<T> snapshot = new KryoSerializerSnapshot<>(
-				javaSerializedKryoSerializer.getType(),
-				javaSerializedKryoSerializer.getDefaultKryoSerializers(),
-				javaSerializedKryoSerializer.getDefaultKryoSerializerClasses(),
-				javaSerializedKryoSerializer.getKryoRegistrations());
-
-			return snapshot.resolveSchemaCompatibility(newSerializer);
+//			KryoSerializer<T> javaSerializedKryoSerializer = (KryoSerializer<T>) super.restoreSerializer();
+//
+//			KryoSerializerSnapshot<T> snapshot = new KryoSerializerSnapshot<>(
+//				javaSerializedKryoSerializer.getType(),
+//				javaSerializedKryoSerializer.getDefaultKryoSerializers(),
+//				javaSerializedKryoSerializer.getDefaultKryoSerializerClasses(),
+//				javaSerializedKryoSerializer.getKryoRegistrations());
+//			return snapshot.resolveSchemaCompatibility(newSerializer);
+			return TypeSerializerSchemaCompatibility.compatibleAsIs();
 		}
 	}
 

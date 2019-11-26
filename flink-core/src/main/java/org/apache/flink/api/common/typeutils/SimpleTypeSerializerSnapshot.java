@@ -44,7 +44,7 @@ public abstract class SimpleTypeSerializerSnapshot<T> implements TypeSerializerS
 	 * backwards compatible code paths in case we decide to make this snapshot backwards compatible with
 	 * the {@link ParameterlessTypeSerializerConfig}.
 	 */
-	private static final int CURRENT_VERSION = 3;
+	private static final int CURRENT_VERSION = 2;
 
 	/** The class of the serializer for this snapshot.
 	 * The field is null if the serializer was created for read and has not been read, yet. */
@@ -83,6 +83,7 @@ public abstract class SimpleTypeSerializerSnapshot<T> implements TypeSerializerS
 	@Override
 	public void writeSnapshot(DataOutputView out) throws IOException {
 		//
+		out.writeUTF(serializerSupplier.get().getClass().getName());
 	}
 
 	@Override
